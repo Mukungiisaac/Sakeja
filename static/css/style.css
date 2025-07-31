@@ -1,0 +1,503 @@
+body {
+  font-family: Arial;
+  background: #FFFFFF;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background-color: #5D16EC;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a {
+  color: #fff;
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #FF914C;
+}
+
+main {
+  padding: 2rem;
+}
+
+form input, form select, form button {
+  display: block;
+  margin: 0.5rem 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  background-color: #FF914C;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.flash {
+  background-color: #5D16EC;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+img {
+  border-radius: 8px;
+}
+
+.btn {
+  background: #FF914C;
+  color: #fff;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+img {
+  border-radius: 6px;
+  max-height: 80px;
+}
+
+.btn {
+  background-color: #FF914C;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+.btn-edit {
+  background-color: #5D16EC;
+  color: #fff;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.btn-delete {
+  background-color: #FF4C4C;
+  color: #fff;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-left: 5px;
+}
+
+.alert {
+  background-color: #FF914C;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 10px auto;
+  width: fit-content;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background: linear-gradient(to right, #FF914C, #5D16EC);
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.login-box {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-bottom: 10px;
+  color: #5D16EC;
+}
+
+.login-box .subtitle {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 5px 5px;
+  background-color: #FF914C;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background-color: #e67833;
+}
+
+.register-text {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.register-text a {
+  color: #5D16EC;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+.login-box select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 14px;
+}
+.top-right-logout {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.top-right-logout form button {
+  background-color: #FF914C;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.top-right-logout form button:hover {
+  background-color: #e56e24;
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.form-box {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-box h2 {
+  text-align: center;
+  color: #5D16EC;
+  margin-bottom: 20px;
+}
+
+.form-box form input,
+.form-box form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-box form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #FF914C;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-box form button:hover {
+  background-color: #e5742d;
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.form-box {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+}
+.house-dashboard {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.house-card {
+  width: 330px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.house-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.house-location,
+.house-type {
+  color: #555;
+  font-size: 14px;
+}
+
+.house-details p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.feature {
+  background: #eee;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.house-description {
+  margin: 10px 0;
+  color: #666;
+  font-size: 13px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn-view, .btn-book {
+  background-color: #1a8917;
+  color: #fff;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.btn-view:hover, .btn-book:hover {
+  opacity: 0.85;
+}
+.house-view-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: #fff;
+  padding: 25px;
+  margin: 40px auto;
+  max-width: 50%;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.view-image img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.view-details {
+  flex: 1;
+  min-width: 300px;
+}
+
+.view-details h2 {
+  font-size: 26px;
+  margin-bottom: 15px;
+}
+
+.view-details p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.btn-book,
+.btn-back {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  text-decoration: none;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.btn-book {
+  background-color: #1a8917;
+}
+
+.btn-book:hover {
+  background-color: #146c12;
+}
+
+.btn-back {
+  background-color: #999;
+}
+
+.btn-back:hover {
+  background-color: #666;
+}
+.page-title{
+  text-align: center;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-buttons button[type="submit"] {
+  background-color: #1a8917;
+  color: white;
+}
+
+.modal-buttons button[type="button"] {
+  background-color: #ccc;
+}

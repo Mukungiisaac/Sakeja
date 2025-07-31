@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="page-title">Available Houses</h2>
+
+<div class="card-container">
+  {% for house in houses %}
+  <div class="house-card">
+    <div class="card-image">
+      <img src="{{ url_for('static', filename='uploads/' ~ house.photo) }}" alt="House Image">
+    </div>
+    <div class="card-body">
+      <h3 class="house-title">{{ house.title }}</h3>
+      <p class="house-location">{{ house.location }}</p>
+      <p class="house-type">{{ house.house_type }}</p>
+
+      <div class="house-details">
+        {% if house.house_type.lower().startswith('1') %}
+        <p><strong>Beds:</strong> 1</p>
+        {% elif house.house_type.lower().startswith('2') %}
+        <p><strong>Beds:</strong> 2</p>
+        {% elif house.house_type.lower().startswith('3') %}
+        <p><strong>Beds:</strong> 3</p>
+        {% endif %}
+        <p><strong>Rent:</strong> KSh {{ house.rent }}</p>
+        <p><strong>Deposit:</strong> KSh {{ house.deposit or 'N/A' }}</p>
+        <p><strong>Distance:</strong> {{ house.distance }} km</p>
+      </div>
+
+      <div class="features">
+        {% if house.water %}<span class="feature">🚿 Water</span>{% endif %}
+        {% if house.wifi %}<span class="feature">📶 WiFi</span>{% endif %}
+        <span class="feature">📞 {{ house.contact_number }}</span>
+      </div>
+
+      <p class="house-description">Spacious and well-located unit ideal for students looking for convenience and comfort.</p>
+
+      <div class="btn-group">
+        <a href="{{ url_for('view_house', house_id=house.id) }}" class="btn-view">View Details</a>
+        <button class="btn-book" onclick="openBookingModal({{ house.id }}, '{{ house.title }}', '{{ house.location }}', '{{ house.house_type }}', '{{ house.rent }}')">
+  Book Now
+</button>
+
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Booking Modal -->
+<div id="bookingModal" class="modal-overlay" style="display: none;">
+  <div class="modal-content">
+    <h2>Book: <span id="modalHouseTitle"></span></h2>
+    <form method="POST" action="{{ url_for('book_house', house_id=0) }}" id="bookingForm">
+      <input type="hidden" name="house_id" id="modalHouseId">
+      
+      <p><strong>Location:</strong> <span id="modalHouseLocation"></span></p>
+      <p><strong>Type:</strong> <span id="modalHouseType"></span></p>
+      <p><strong>Rent:</strong> KSh <span id="modalHouseRent"></span></p>
+
+      <input type="text" name="fullname" placeholder="Your Full Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="text" name="id_number" placeholder="National ID Number" required>
+       <label for="date">Preferred Move-in Date</label>
+      <input type="date" name="move_in_date" required>
+      <textarea name="message" placeholder="Additional Message (optional)"></textarea>
+
+      <div class="modal-buttons">
+        <button type="submit">Submit Booking</button>
+        <button type="button" onclick="closeBookingModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+<script>
+  function openBookingModal(houseId, title, location, type, rent) {
+    document.getElementById('bookingModal').style.display = 'flex';
+    document.getElementById('modalHouseTitle').textContent = title;
+    document.getElementById('modalHouseLocation').textContent = location;
+    document.getElementById('modalHouseType').textContent = type;
+    document.getElementById('modalHouseRent').textContent = rent;
+
+    document.getElementById('modalHouseId').value = houseId;
+    document.getElementById('bookingForm').action = `/book_house/${houseId}`;
+  }
+
+  function closeBookingModal() {
+    document.getElementById('bookingModal').style.display = 'none';
+  }
+</script>
+{% endblock %}
+

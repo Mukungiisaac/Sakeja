@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+  <div class="form-box">
+    <h2>Edit House Details</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+      <input type="text" name="title" placeholder="House Title" value="{{ house.title }}" required>
+
+      <input type="text" name="location" placeholder="Location" value="{{ house.location }}" required>
+
+      <input type="number" name="distance" placeholder="Distance from Campus (km)" value="{{ house.distance }}" required>
+
+      <input type="number" name="rent" placeholder="Monthly Rent (KES)" value="{{ house.rent }}" required>
+
+      <input type="number" name="deposit" placeholder="Deposit Amount (KES)" value="{{ house.deposit }}" required>
+
+      <select name="house_type" required>
+        <option value="" disabled>Select House Type</option>
+        <option value="single" {% if house.house_type == 'single' %}selected{% endif %}>Single</option>
+        <option value="bedsitter" {% if house.house_type == 'bedsitter' %}selected{% endif %}>Bedsitter</option>
+        <option value="one-bedroom" {% if house.house_type == 'one-bedroom' %}selected{% endif %}>One Bedroom</option>
+      </select>
+
+      <select name="water" required>
+        <option value="" disabled>Water Availability</option>
+        <option value="yes" {% if house.water == 'yes' %}selected{% endif %}>Yes</option>
+        <option value="no" {% if house.water == 'no' %}selected{% endif %}>No</option>
+      </select>
+
+      <select name="wifi" required>
+        <option value="" disabled>WiFi Availability</option>
+        <option value="yes" {% if house.wifi == 'yes' %}selected{% endif %}>Yes</option>
+        <option value="no" {% if house.wifi == 'no' %}selected{% endif %}>No</option>
+      </select>
+
+      <input type="text" name="contact_number" placeholder="Phone Number" value="{{ house.contact_number }}" required>
+
+      <label>Update Photo (optional)</label>
+      <input type="file" name="photo">
+
+      <button type="submit">Update House</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

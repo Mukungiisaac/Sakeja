@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="margin-left: 20px;">Available Houses</h2>
+
+<div class="card-container">
+  {% for house in houses %}
+    <div class="house-card">
+      <img src="{{ url_for('static', filename='uploads/' ~ house.photo) }}" alt="House Photo">
+      <div class="house-info">
+        <h3>{{ house.title }}</h3>
+        <p><strong>Location:</strong> {{ house.location }}</p>
+        <p><strong>Type:</strong> {{ house.house_type }}</p>
+        <p><strong>Rent:</strong> KES {{ house.rent }}</p>
+        <p><strong>Deposit:</strong> KES {{ house.deposit }}</p>
+        <p><strong>Water:</strong> {{ 'Available' if house.water else 'Not Available' }}</p>
+        <p><strong>WiFi:</strong> {{ 'Available' if house.wifi else 'Not Available' }}</p>
+        <p><strong>Phone:</strong> {{ house.contact_number }}</p>
+        <a href="{{ url_for('view_house', house_id=house.id) }}" class="btn-book">View Details</a>
+      </div>
+    </div>
+  {% else %}
+    <p>No houses posted yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="house-view-card">
+  <div class="view-image">
+    <img src="{{ url_for('static', filename='uploads/' ~ house.photo) }}" alt="House Image">
+  </div>
+  <div class="view-details">
+    <h2>{{ house.title }}</h2>
+    <p><strong>Location:</strong> {{ house.location }}</p>
+    <p><strong>Type:</strong> {{ house.house_type }}</p>
+    <p><strong>Distance:</strong> {{ house.distance }} km</p>
+    <p><strong>Rent:</strong> KSh {{ house.rent }}</p>
+    <p><strong>Deposit:</strong> {{ house.deposit or 'N/A' }}</p>
+    <p><strong>Water:</strong> {{ 'Available' if house.water else 'Unavailable' }}</p>
+    <p><strong>WiFi:</strong> {{ 'Available' if house.wifi else 'Unavailable' }}</p>
+    <p><strong>Phone:</strong> <a href="https://wa.me/{{ house.contact_number }}" target="_blank">{{ house.contact_number }}</a></p>
+
+    <div class="buttons">
+      <a href="{{ url_for('book_house', house_id=house.id) }}" class="btn-book">Book This House</a>
+      <a href="{{ url_for('student_dashboard') }}" class="btn-back">← Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

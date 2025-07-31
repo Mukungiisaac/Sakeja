@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sakeja</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <main class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div id="flash-message">
+          {% for message in messages %}
+            <div class="alert">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% if current_user.is_authenticated %}
+  <div class="top-right-logout">
+    <form action="{{ url_for('logout') }}" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+  </div>
+{% endif %}
+
+
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  {% block scripts %}
+<!-- JavaScript hooks from child templates will go here -->
+{% endblock %}
+
+  <script>
+    setTimeout(function () {
+      const flash = document.getElementById('flash-message');
+      if (flash) {
+        flash.style.opacity = '0';
+        setTimeout(() => flash.remove(), 500);
+      }
+    }, 4000);
+  </script>
+
+</body>
+</html>

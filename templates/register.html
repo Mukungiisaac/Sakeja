@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-container">
+  <div class="login-box">
+    <h2>Create Your Account</h2>
+    <p class="subtitle">Register to start booking with Sakeja</p>
+
+    <form method="POST">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+
+      <select name="role" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="landlord">Landlord</option>
+        <option value="student">Student</option>
+      </select>
+
+      <button type="submit">Register</button>
+    </form>
+
+    <p class="register-text">
+      Already have an account?
+      <a href="{{ url_for('login') }}">Login here</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
