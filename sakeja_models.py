@@ -1,12 +1,14 @@
 from extensions import db
 from flask_login import UserMixin
 
-class User(db.Model, UserMixin):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-    role = db.Column(db.String(20), nullable=False)
-    name = db.Column(db.String(100))
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    role = db.Column(db.String(20), nullable=False)  # 'student', 'landlord', 'admin'
+    is_approved = db.Column(db.Boolean, default=False)  # ✅ Add this line
+
 
     houses = db.relationship('House', backref='landlord', lazy=True)
 
@@ -24,7 +26,7 @@ class House(db.Model):
     photo = db.Column(db.String(255))
     contact_number = db.Column(db.String(20))
     landlord_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    
+
 from datetime import datetime
 from extensions import db
 
@@ -34,7 +36,7 @@ class Booking(db.Model):
     student_name = db.Column(db.String(100), nullable=False)
     student_email = db.Column(db.String(100), nullable=False)
     student_phone = db.Column(db.String(20), nullable=False)
-    id_number = db.Column(db.String(20), nullable=False)
+    reg_number = db.Column(db.String(20), nullable=False)
     move_in_date = db.Column(db.String(20), nullable=False)
     message = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)

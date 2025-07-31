@@ -55,6 +55,9 @@ def register():
         password = generate_password_hash(request.form['password'])
         role = request.form['role']
 
+        
+
+
         # ✅ Check if user already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
@@ -62,7 +65,9 @@ def register():
             return redirect(url_for('register'))
 
         # ✅ If email not taken, proceed to add
-        user = User(email=email, name=name, password=password, role=role)
+        is_approved = True if role == 'student' else False
+        user = User(email=email, name=name, password=password, role=role, is_approved=is_approved)
+
         db.session.add(user)
         db.session.commit()
 
@@ -79,28 +84,22 @@ def login():
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
-
         if user and check_password_hash(user.password, password):
             login_user(user)
             flash('Welcome back!')
 
             # Redirect based on role
-            if user.role == 'landlord':
+            if user.role == 'admin':
+                return redirect(url_for('admin_dashboard'))
+            elif user.role == 'landlord':
                 return redirect(url_for('landlord_dashboard'))
-            elif user.role == 'student':
-                return redirect(url_for('student_dashboard'))
             else:
-                return redirect(url_for('home'))  # fallback
+                return redirect(url_for('student_dashboard'))
 
         flash('Invalid login details')
     return render_template('login.html')
 
 
-# Dashboard (student or landlord redirect later)
-# @app.route('/dashboard')
-# @login_required
-# def dashboard():
-#     return render_template('dashboard.html', user=current_user)
 
 # Logout
 @app.route('/logout', methods=['POST'])
@@ -184,6 +183,11 @@ def delete_house(house_id):
 @login_required
 @landlord_required
 def post_house():
+    # 🔒 Restrict unapproved landlords
+    if not current_user.is_approved:
+        flash('You are not approved to post houses yet. Please wait for admin approval.')
+        return redirect(url_for('landlord_dashboard'))
+
     if request.method == 'POST':
         title = request.form['title']
         location = request.form['location']
@@ -223,6 +227,8 @@ def post_house():
 
     return render_template('post_house.html')
 
+    
+
 @app.route('/student/dashboard')
 @login_required
 def student_dashboard():
@@ -248,7 +254,7 @@ def book_house(house_id):
         student_name=request.form['fullname'],
         student_email=request.form['email'],
         student_phone=request.form['phone'],
-        id_number=request.form['id_number'],
+        reg_number=request.form['reg_number'],
         move_in_date=request.form['move_in_date'],
         message=request.form.get('message')
     )
@@ -258,6 +264,51 @@ def book_house(house_id):
 
     flash('Booking successful! The landlord will contact you soon.', 'success')
     return redirect(url_for('student_dashboard'))
+
+
+@app.route('/admin/dashboard')
+@login_required
+def admin_dashboard():
+    if current_user.role != 'admin':
+        flash('Access denied.')
+        return redirect(url_for('dashboard'))
+
+    from sakeja_models import User
+    landlords = User.query.filter_by(role='landlord').all()
+    students = User.query.filter_by(role='student').all()
+
+    return render_template('admin_dashboard.html', landlords=landlords, students=students)
+
+@app.route('/admin/approve/<int:user_id>')
+@login_required
+def approve_landlord(user_id):
+    if current_user.role != 'admin':
+        flash('Access denied.')
+        return redirect(url_for('dashboard'))
+
+    from sakeja_models import User
+    user = User.query.get_or_404(user_id)
+
+    if user.role == 'landlord':
+        user.is_approved = True
+        db.session.commit()
+        flash(f'{user.name} has been approved.')
+
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    if current_user.role == 'admin':
+        return redirect(url_for('admin_dashboard'))
+    elif current_user.role == 'landlord':
+        return redirect(url_for('landlord_dashboard'))
+    elif current_user.role == 'student':
+        return redirect(url_for('student_dashboard'))
+    else:
+        flash("Invalid user role.")
+        return redirect(url_for('logout'))
+
 
 # -------------------------------
 # Run App

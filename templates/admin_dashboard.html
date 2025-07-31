@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<h3>Landlords</h3>
+<table>
+  <thead>
+    <tr><th>Name</th><th>Email</th><th>Approved</th><th>Action</th></tr>
+  </thead>
+  <tbody>
+    {% for landlord in landlords %}
+    <tr>
+      <td>{{ landlord.name }}</td>
+      <td>{{ landlord.email }}</td>
+      <td>{{ 'Yes' if landlord.is_approved else 'No' }}</td>
+      <td>
+        {% if not landlord.is_approved %}
+          <a href="{{ url_for('approve_landlord', user_id=landlord.id) }}">Approve</a>
+        {% else %}
+          <span>Approved</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h3>Students</h3>
+<table>
+  <thead>
+    <tr><th>Name</th><th>Email</th></tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+    <tr>
+      <td>{{ student.name }}</td>
+      <td>{{ student.email }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
