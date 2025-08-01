@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 40px auto; padding: 30px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', sans-serif;">
+
+  <h2 style="text-align: center; margin-bottom: 20px;">Post Your Item</h2>
+  
+  <form method="POST" enctype="multipart/form-data">
+    <div style="margin-bottom: 15px;">
+      <label for="title">Item Title:</label><br>
+      <input type="text" name="title" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="description">Description:</label><br>
+      <textarea name="description" rows="4" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;"></textarea>
+    </div>
+    <div></div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="price">Price (KES):</label><br>
+      <input type="number" name="price" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="phone">Your Phone Number:</label><br>
+      <input type="text" name="phone" required placeholder="e.g. 0712 345 678" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="location">Where can someone find you?</label><br>
+      <input type="text" name="location" required placeholder="e.g. Hostel B Room 2A" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label for="photo">Upload Item Image:</label><br>
+      <input type="file" name="photo" required style="width: 100%; padding: 10px;">
+    </div>
+
+    <div style="text-align: center;">
+      <button type="submit" style="background-color: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer;">
+        Post Item
+      </button>
+    </div>
+  </form>
+
+</div>
+
+<div style="max-width: 800px; margin: 40px auto;">
+  <h3 style="text-align: center;">Your Posted Items</h3>
+  {% if items %}
+    <ul style="list-style: none; padding: 0;">
+      {% for item in items %}
+        <li style="margin-bottom: 25px; border: 1px solid #ddd; padding: 15px; border-radius: 10px;">
+          <strong>{{ item.title }}</strong><br>
+          <small>{{ item.description }}</small><br>
+          <strong>KES {{ item.price }}</strong><br>
+          <img src="{{ url_for('static', filename='uploads/' ~ item.photo) }}" alt="Item Image" style="max-width: 150px; margin-top: 10px;">
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p style="text-align: center;">You haven't posted any items yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

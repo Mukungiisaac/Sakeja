@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="house-dashboard">
+  <h2>Marketplace</h2>
+  <p>Explore second-hand items posted by other students and sellers.</p>
+
+  <div class="card-container">
+    {% for item in items %}
+    <div class="house-card">
+      <img src="{{ url_for('static', filename='uploads/' ~ item.photo) }}" alt="Item Image">
+      <div class="house-info">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.description }}</p>
+        <p><strong>Price:</strong> KES {{ item.price }}</p>
+        <p><strong>Seller Contact:</strong>
+          <a href="https://wa.me/{{ item.seller.contact_number }}" target="_blank">
+            {{ item.seller.contact_number }}
+          </a>
+        </p>
+      </div>
+    </div>
+    {% else %}
+    <p>No items available at the moment.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

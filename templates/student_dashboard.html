@@ -28,7 +28,7 @@
       </div>
 
       <div class="features">
-        {% if house.water %}<span class="feature">🚿 Water</span>{% endif %}
+        {% if house.water %}<span class="feature"> Water</span>{% endif %}
         {% if house.wifi %}<span class="feature">📶 WiFi</span>{% endif %}
         <span class="feature">📞 {{ house.contact_number }}</span>
       </div>
@@ -73,6 +73,26 @@
     </form>
   </div>
 </div>
+
+<hr>
+<h2 style="text-align:center;">Marketplace Items</h2>
+
+{% if items %}
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+    {% for item in items %}
+      <div style="border: 1px solid #ccc; padding: 15px; border-radius: 10px;">
+        <h4>{{ item.title }}</h4>
+        <img src="{{ url_for('static', filename='uploads/' ~ item.photo) }}" style="width:100%; height:auto; border-radius: 8px;">
+        <p>{{ item.description }}</p>
+        <p><strong>KES {{ item.price }}</strong></p>
+        <p><small>{{ item.location }}</small></p>
+        <p><small>📞 {{ item.phone }}</small></p>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p style="text-align:center;">No marketplace items yet.</p>
+{% endif %}
 
 
 {% endblock %}

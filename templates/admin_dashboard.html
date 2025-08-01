@@ -1,42 +1,132 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Admin Dashboard</h2>
+<div style="padding: 40px; font-family: Arial, sans-serif;">
 
-<h3>Landlords</h3>
-<table>
-  <thead>
-    <tr><th>Name</th><th>Email</th><th>Approved</th><th>Action</th></tr>
-  </thead>
-  <tbody>
-    {% for landlord in landlords %}
-    <tr>
-      <td>{{ landlord.name }}</td>
-      <td>{{ landlord.email }}</td>
-      <td>{{ 'Yes' if landlord.is_approved else 'No' }}</td>
-      <td>
-        {% if not landlord.is_approved %}
-          <a href="{{ url_for('approve_landlord', user_id=landlord.id) }}">Approve</a>
-        {% else %}
-          <span>Approved</span>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+  <h1>Admin Dashboard</h1>
 
-<h3>Students</h3>
-<table>
-  <thead>
-    <tr><th>Name</th><th>Email</th></tr>
-  </thead>
-  <tbody>
-    {% for student in students %}
-    <tr>
-      <td>{{ student.name }}</td>
-      <td>{{ student.email }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+  <!-- ✅ Pending Landlords -->
+  <section style="margin-top: 30px;">
+    <h2>Pending Landlord Approvals</h2>
+    {% if pending_landlords %}
+      <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <thead style="background-color: #f5f5f5;">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for landlord in pending_landlords %}
+            <tr>
+              <td>{{ landlord.name }}</td>
+              <td>{{ landlord.email }}</td>
+              <td>
+                <a href="{{ url_for('approve_user', user_id=landlord.id) }}"
+                   style="background-color: green; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px; margin-right: 5px;">
+                  Approve
+                </a>
+                <a href="{{ url_for('reject_user', user_id=landlord.id) }}"
+                   style="background-color: red; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">
+                  Reject
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No pending landlords.</p>
+    {% endif %}
+  </section>
+
+  <!-- ✅ Pending Sellers -->
+  <section style="margin-top: 30px;">
+    <h2>Pending Seller Approvals</h2>
+    {% if pending_sellers %}
+      <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <thead style="background-color: #f5f5f5;">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for seller in pending_sellers %}
+            <tr>
+              <td>{{ seller.name }}</td>
+              <td>{{ seller.email }}</td>
+              <td>
+                <a href="{{ url_for('approve_user', user_id=seller.id) }}"
+                   style="background-color: green; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px; margin-right: 5px;">
+                  Approve
+                </a>
+                <a href="{{ url_for('reject_user', user_id=seller.id) }}"
+                   style="background-color: red; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">
+                  Reject
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No pending sellers.</p>
+    {% endif %}
+  </section>
+
+  <!-- ✅ Approved Landlords -->
+  <section style="margin-top: 30px;">
+    <h2>Approved Landlords</h2>
+    {% if landlords %}
+      <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <thead style="background-color: #f5f5f5;">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Approved?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for landlord in landlords %}
+            <tr>
+              <td>{{ landlord.name }}</td>
+              <td>{{ landlord.email }}</td>
+              <td>{{ "Yes" if landlord.is_approved else "No" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No approved landlords found.</p>
+    {% endif %}
+  </section>
+
+  <!-- ✅ Students -->
+  <section style="margin-top: 30px;">
+    <h2>Students</h2>
+    {% if students %}
+      <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+        <thead style="background-color: #f5f5f5;">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+            <tr>
+              <td>{{ student.name }}</td>
+              <td>{{ student.email }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No students found.</p>
+    {% endif %}
+  </section>
+
+</div>
 {% endblock %}
