@@ -1,99 +1,108 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<h2 class="page-title">Available Houses</h2>
-
-<div class="card-container">
-  {% for house in houses %}
-  <div class="house-card">
-    <div class="card-image">
-      <img src="{{ url_for('static', filename='uploads/' ~ house.photo) }}" alt="House Image">
-    </div>
-    <div class="card-body">
-      <h3 class="house-title">{{ house.title }}</h3>
-      <p class="house-location">{{ house.location }}</p>
-      <p class="house-type">{{ house.house_type }}</p>
-
-      <div class="house-details">
-        {% if house.house_type.lower().startswith('1') %}
-        <p><strong>Beds:</strong> 1</p>
-        {% elif house.house_type.lower().startswith('2') %}
-        <p><strong>Beds:</strong> 2</p>
-        {% elif house.house_type.lower().startswith('3') %}
-        <p><strong>Beds:</strong> 3</p>
-        {% endif %}
-        <p><strong>Rent:</strong> KSh {{ house.rent }}</p>
-        <p><strong>Deposit:</strong> KSh {{ house.deposit or 'N/A' }}</p>
-        <p><strong>Distance:</strong> {{ house.distance }} km</p>
-      </div>
-
-      <div class="features">
-        {% if house.water %}<span class="feature"> Water</span>{% endif %}
-        {% if house.wifi %}<span class="feature">📶 WiFi</span>{% endif %}
-        <span class="feature">📞 {{ house.contact_number }}</span>
-      </div>
-
-      <p class="house-description">Spacious and well-located unit ideal for students looking for convenience and comfort.</p>
-
-      <div class="btn-group">
-        <a href="{{ url_for('view_house', house_id=house.id) }}" class="btn-view">View Details</a>
-        <button class="btn-book" onclick="openBookingModal({{ house.id }}, '{{ house.title }}', '{{ house.location }}', '{{ house.house_type }}', '{{ house.rent }}')">
-  Book Now
-</button>
-
-      </div>
-    </div>
+<!-- ...existing code... -->
+<nav class="navbar">
+  <div class="logo">ITECH STUDIO</div>
+  <div class="nav-links">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('marketplace') }}">Products</a>
+    <a href="{{ url_for('student_dashboard') }}">Houses</a>
   </div>
-  {% endfor %}
-</div>
-
-<!-- Booking Modal -->
-<div id="bookingModal" class="modal-overlay" style="display: none;">
-  <div class="modal-content">
-    <h2>Book: <span id="modalHouseTitle"></span></h2>
-    <form method="POST" action="{{ url_for('book_house', house_id=0) }}" id="bookingForm">
-      <input type="hidden" name="house_id" id="modalHouseId">
-      
-      <p><strong>Location:</strong> <span id="modalHouseLocation"></span></p>
-      <p><strong>Type:</strong> <span id="modalHouseType"></span></p>
-      <p><strong>Rent:</strong> KSh <span id="modalHouseRent"></span></p>
-
-      <input type="text" name="fullname" placeholder="Your Full Name" required>
-      <input type="email" name="email" placeholder="Email Address" required>
-      <input type="tel" name="phone" placeholder="Phone Number" required>
-      <input type="text" name="reg_number" placeholder="Student Reg Number" required>
-       <label for="date">Preferred Move-in Date</label>
-      <input type="date" name="move_in_date" required>
-      <textarea name="message" placeholder="Additional Message (optional)"></textarea>
-
-      <div class="modal-buttons">
-        <button type="submit">Submit Booking</button>
-        <button type="button" onclick="closeBookingModal()">Cancel</button>
-      </div>
+  <div class="nav-logout">
+    <form method="POST" action="{{ url_for('logout') }}">
+      <button type="submit" class="btn">Logout</button>
     </form>
   </div>
-</div>
+</nav>
+<!-- ...existing code... -->
+<div class="student-dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h3>Category</h3>
+    <select>
+      <option>All Categories</option>
+      <!-- Add more categories if needed -->
+    </select>
+    <h3>Price Range</h3>
+    <input type="text" placeholder="Min Price" />
+    <input type="text" placeholder="Max Price" />
+    <button class="filter-btn">Apply Filters</button>
+  </aside>
 
-<hr>
-<h2 style="text-align:center;">Marketplace Items</h2>
+  <!-- Main Content -->
+  <section class="main-section">
+    <input class="search-bar" type="text" placeholder="Search products..." />
 
-{% if items %}
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
-    {% for item in items %}
-      <div style="border: 1px solid #ccc; padding: 15px; border-radius: 10px;">
-        <h4>{{ item.title }}</h4>
-        <img src="{{ url_for('static', filename='uploads/' ~ item.photo) }}" style="width:100%; height:auto; border-radius: 8px;">
-        <p>{{ item.description }}</p>
-        <p><strong>KES {{ item.price }}</strong></p>
-        <p><small>{{ item.location }}</small></p>
-        <p><small>📞 {{ item.phone }}</small></p>
+    <h2 class="page-title">Available Houses</h2>
+    <div class="products-grid">
+      {% for house in houses %}
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="{{ url_for('static', filename='uploads/' ~ house.photo) }}" alt="House Image">
+        </div>
+        <h4>{{ house.title }}</h4>
+        <p class="price">KSh {{ house.rent }}</p>
+        <p class="description">{{ house.location }} | {{ house.house_type }}</p>
+        <div class="features">
+          {% if house.water %}<span class="feature">Water</span>{% endif %}
+          {% if house.wifi %}<span class="feature">WiFi</span>{% endif %}
+          <span class="feature">📞 {{ house.contact_number }}</span>
+        </div>
+        <div class="shop-chat" style="margin-top:10px;">
+          <a href="{{ url_for('view_house', house_id=house.id) }}" class="chat-btn">View Details</a>
+          <button class="chat-btn" onclick="openBookingModal({{ house.id }}, '{{ house.title }}', '{{ house.location }}', '{{ house.house_type }}', '{{ house.rent }}')">Book Now</button>
+        </div>
       </div>
-    {% endfor %}
-  </div>
-{% else %}
-  <p style="text-align:center;">No marketplace items yet.</p>
-{% endif %}
+      {% endfor %}
+    </div>
 
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <h2>Book: <span id="modalHouseTitle"></span></h2>
+        <form method="POST" action="{{ url_for('book_house', house_id=0) }}" id="bookingForm">
+          <input type="hidden" name="house_id" id="modalHouseId">
+          <p><strong>Location:</strong> <span id="modalHouseLocation"></span></p>
+          <p><strong>Type:</strong> <span id="modalHouseType"></span></p>
+          <p><strong>Rent:</strong> KSh <span id="modalHouseRent"></span></p>
+          <input type="text" name="fullname" placeholder="Your Full Name" required>
+          <input type="email" name="email" placeholder="Email Address" required>
+          <input type="tel" name="phone" placeholder="Phone Number" required>
+          <input type="text" name="reg_number" placeholder="Student Reg Number" required>
+          <label for="date">Preferred Move-in Date</label>
+          <input type="date" name="move_in_date" required>
+          <textarea name="message" placeholder="Additional Message (optional)"></textarea>
+          <div class="modal-buttons">
+            <button type="submit">Submit Booking</button>
+            <button type="button" onclick="closeBookingModal()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+    <h2 style="text-align:center;">Marketplace Items</h2>
+    <div class="products-grid">
+      {% for item in items %}
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="{{ url_for('static', filename='uploads/' ~ item.photo) }}" alt="{{ item.title }}">
+        </div>
+        <h4>{{ item.title }}</h4>
+        <p class="price">KES {{ item.price }}</p>
+        <p class="description">{{ item.description }}</p>
+        <div class="shop-chat">
+          <span>{{ item.location }}</span>
+          <span>📞 {{ item.phone }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% if not items %}
+      <p style="text-align:center;">No marketplace items yet.</p>
+    {% endif %}
+  </section>
+</div>
 
 {% endblock %}
 {% block scripts %}
@@ -104,14 +113,11 @@
     document.getElementById('modalHouseLocation').textContent = location;
     document.getElementById('modalHouseType').textContent = type;
     document.getElementById('modalHouseRent').textContent = rent;
-
     document.getElementById('modalHouseId').value = houseId;
     document.getElementById('bookingForm').action = `/book_house/${houseId}`;
   }
-
   function closeBookingModal() {
     document.getElementById('bookingModal').style.display = 'none';
   }
 </script>
 {% endblock %}
-

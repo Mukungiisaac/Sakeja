@@ -552,3 +552,184 @@ body.login-page {
   text-decoration: none;
   border-radius: 6px;
 }
+/* ...existing code... */
+.student-dashboard-layout {
+  display: flex;
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.sidebar {
+  width: 260px;
+  background: #f8f8f8;
+  padding: 24px 18px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #eee;
+  height: fit-content;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #5D16EC;
+}
+
+.sidebar select,
+.sidebar input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.filter-btn {
+  background: #5D16EC;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  width: 100%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.main-section {
+  flex: 1;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 24px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #eee;
+  padding: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.product-image-container {
+  width: 100%;
+  position: relative;
+}
+
+.product-image-container img {
+  width: 100%;
+  border-radius: 10px;
+  height: 160px;
+  object-fit: cover;
+}
+
+.views {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.price {
+  color: green;
+  font-weight: bold;
+  margin: 8px 0 4px 0;
+}
+
+.description {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.shop-chat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.chat-btn {
+  background: #e6f0ff;
+  color: #5D16EC;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+/* ...existing code... */
+
+/* NAVIGATION BAR */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #5D16EC;
+  padding: 5px 10px;
+  box-shadow: 0 2px 8px #eee;
+}
+
+/* Add padding to body or main to prevent content hiding behind navbar */
+body {
+  padding-top: 70px; /* Adjust based on navbar height */
+}
+/* ...existing code... */
+
+.logo {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #FF914C;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.nav-logout form {
+  margin: 0 80px;
+}
+
+.nav-logout .btn {
+  background-color: #FF914C;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+/* ...existing code... */
