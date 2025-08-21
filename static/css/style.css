@@ -6,15 +6,16 @@ body {
   padding: 0;
 }
 
-nav {
-  background-color: #5D16EC;
+.navbar {
+  background-color: #f6f5f7;
   color: #fff;
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-nav a {
+.navbar a {
   color: #fff;
   margin-left: 1rem;
   text-decoration: none;
@@ -559,15 +560,22 @@ body.login-page {
   margin: 30px 0;
 }
 
+
 .sidebar {
+  position: fixed;
+  top: 80px; /* Adjust based on navbar height */
+  left: 0;
   width: 260px;
   background: #f8f8f8;
   padding: 24px 18px;
   border-radius: 14px;
   box-shadow: 0 2px 8px #eee;
   height: fit-content;
+  align-self: flex-start;
+  z-index: 101;
 }
 
+/* ...existing code... */
 .sidebar h3 {
   margin-top: 0;
   margin-bottom: 10px;
@@ -678,6 +686,9 @@ body.login-page {
   font-weight: bold;
 }
 /* ...existing code... */
+.student-dashboard-layout {
+  margin-left: 280px; /* Sidebar width + some gap */
+}
 
 /* NAVIGATION BAR */
 
@@ -733,3 +744,226 @@ body {
   cursor: pointer;
 }
 /* ...existing code... */
+input, select, textarea {
+  border: 1px solid #ccc;
+  outline: none;
+  box-shadow: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border: 1px solid #ccc;
+  outline: none;
+  box-shadow: none;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: -60px; /* Hide most of the footer, adjust as needed */
+  width: 100%;
+  background: #717072;
+  color: #fff;
+  padding: 24px 0;
+  text-align: center;
+  z-index: 99;
+  transition: bottom 0.3s;
+}
+
+.footer:hover {
+  bottom: 0;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  font-size: 1rem;
+}
+
+.footer-logo {
+  font-weight: bold;
+  color: #FF914C;
+  font-size: 1.2rem;
+}
+
+.footer a {
+  color: #FF914C;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px; /* This creates space between cards */
+  margin-top: 24px;
+  padding-bottom: 40px;
+}
+
+.house-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 420px;
+  height: 100%;
+  overflow: hidden;
+  margin: 0; /* No extra margin needed if gap is set above */
+  padding: 0;
+}
+
+.house-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 14px 14px 0 0;
+  display: block;
+}
+
+.house-info {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.house-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.2rem;
+}
+
+.house-info p {
+  margin: 2px 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+.home-hero {
+  display: flex;
+  align-items: center;
+  background: #e9edfb;
+  border-radius: 24px;
+  padding: 48px 32px;
+  margin: 32px auto;
+  max-width: 1400px;
+  min-height: 480px;
+  box-shadow: 0 2px 16px #e0e0e0;
+}
+
+.hero-left {
+  flex: 1;
+  padding-right: 32px;
+  min-width: 320px;
+}
+
+.hero-right {
+  flex: 3; /* Make image area 3x bigger than text */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px #d1c4e9;
+  max-width: none;
+}
+
+.hero-left {
+  flex: 1;
+  padding-right: 32px;
+}
+
+.hero-left h1 {
+  font-size: 3.2rem;
+  margin-bottom: 18px;
+  line-height: 1.1;
+}
+
+.bold {
+  font-weight: 900;
+  color: #222;
+}
+
+.highlight {
+  color: #6c3ae6;
+  font-weight: 900;
+  font-size: 3.2rem;
+}
+
+.hero-desc {
+  font-size: 1.3rem;
+  color: #444;
+  margin-bottom: 32px;
+}
+
+.hero-btn {
+  background: linear-gradient(90deg, #6c3ae6 60%, #a259f7 100%);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 18px 38px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 4px 18px #d1c4e9;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.hero-btn:hover {
+  background: linear-gradient(90deg, #a259f7 60%, #6c3ae6 100%);
+}
+
+.hero-stat {
+  position: absolute;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px #e0e0e0;
+  padding: 22px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+  min-width: 120px;
+}
+
+.top-right {
+  top: 16px;
+  right: 16px;
+}
+
+.bottom-left {
+  bottom: 16px;
+  left: 16px;
+}
+
+.stat-icon {
+  font-size: 2.2rem;
+  color: #6c3ae6;
+  margin-bottom: 8px;
+}
+
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #6c3ae6;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #444;
+}

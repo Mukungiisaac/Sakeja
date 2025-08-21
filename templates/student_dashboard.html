@@ -3,17 +3,35 @@
 <!-- ...existing code... -->
 <nav class="navbar">
   <div class="logo">ITECH STUDIO</div>
+
   <div class="nav-links">
     <a href="{{ url_for('home') }}">Home</a>
     <a href="{{ url_for('marketplace') }}">Products</a>
     <a href="{{ url_for('student_dashboard') }}">Houses</a>
+
+    {% if current_user.is_authenticated %}
+      {% if current_user.role == 'landlord' %}
+        <a href="{{ url_for('landlord_dashboard') }}">My Houses</a>
+      {% elif current_user.role == 'seller' %}
+        <a href="{{ url_for('seller_dashboard') }}">My Items</a>
+      {% elif current_user.role == 'admin' %}
+        <a href="{{ url_for('admin_dashboard') }}">Admin Panel</a>
+      {% endif %}
+    {% else %}
+      <a href="{{ url_for('register') }}">Advertise</a>
+      <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
   </div>
+
   <div class="nav-logout">
-    <form method="POST" action="{{ url_for('logout') }}">
-      <button type="submit" class="btn">Logout</button>
-    </form>
+    {% if current_user.is_authenticated %}
+      <form method="POST" action="{{ url_for('logout') }}">
+        <button type="submit" class="btn">Logout</button>
+      </form>
+    {% endif %}
   </div>
 </nav>
+
 <!-- ...existing code... -->
 <div class="student-dashboard-layout">
   <!-- Sidebar -->
@@ -50,7 +68,7 @@
         </div>
         <div class="shop-chat" style="margin-top:10px;">
           <a href="{{ url_for('view_house', house_id=house.id) }}" class="chat-btn">View Details</a>
-          <button class="chat-btn" onclick="openBookingModal({{ house.id }}, '{{ house.title }}', '{{ house.location }}', '{{ house.house_type }}', '{{ house.rent }}')">Book Now</button>
+          <button class="chat-btn" onclick="openBookingModal('{{ house.id }}', '{{ house.title }}', '{{ house.location }}', '{{ house.house_type }}', '{{ house.rent }}')">Book Now</button>
         </div>
       </div>
       {% endfor %}
@@ -103,6 +121,17 @@
     {% endif %}
   </section>
 </div>
+
+<!-- ...existing code... -->
+<footer class="footer">
+  <div class="footer-content">
+    <span class="footer-logo">ITECH STUDIO</span>
+    <span>&copy; {{ current_year }} Comrade Swap. All rights reserved.</span>
+    <span>
+      <a href="mailto:support@comradeswap.com">Contact Support</a>
+    </span>
+  </div>
+</footer>
 
 {% endblock %}
 {% block scripts %}

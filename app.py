@@ -55,7 +55,7 @@ def landlord_required(f):
 
 @app.route('/')
 def home():
-    return redirect(url_for('login'))
+    return redirect(url_for('student_dashboard'))
 
 # Register
 @app.route('/register', methods=['GET', 'POST'])
@@ -93,7 +93,7 @@ def login():
             flash('Welcome back!')
 
             # Redirect by role
-            return redirect(url_for(f"{user.role}_dashboard" if user.role != 'seller' else 'seller_marketplace'))
+            return redirect(url_for('seller_dashboard')) if user.role == 'seller' else redirect(url_for(f"{user.role}_dashboard"))
 
         flash('Invalid credentials.')
     return render_template('login.html')
@@ -199,6 +199,10 @@ def delete_house(house_id):
 # SELLER FEATURES
 # -------------------------------
 
+# -------------------------------
+# SELLER FEATURES
+# -------------------------------
+
 @app.route('/seller/marketplace', methods=['GET', 'POST'])
 @login_required
 def seller_marketplace():
@@ -218,7 +222,7 @@ def seller_marketplace():
         location = request.form['location']
         photo = request.files['photo']
 
-        if photo:
+        if photo and photo.filename:
             filename = secure_filename(photo.filename)
             photo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             photo.save(photo_path)
@@ -236,13 +240,14 @@ def seller_marketplace():
             db.session.commit()
             flash('Item posted successfully!')
 
-            # ✅ Redirect to student dashboard
-            return redirect(url_for('student_dashboard'))
+            # ✅ Redirect to seller dashboard after posting
+            return redirect(url_for('seller_dashboard'))
         else:
             flash('Please upload a photo.')
 
-    my_items = Item.query.filter_by(seller_id=current_user.id).all()
-    return render_template('seller_dashboard.html', items=my_items)
+    # Just render a form for posting items
+    return render_template('post_item.html')  
+
 
 @app.route('/seller/dashboard')
 @login_required
@@ -251,6 +256,7 @@ def seller_dashboard():
         flash('Access denied.')
         return redirect(url_for('dashboard'))
 
+    # Show only the seller's own items
     items = Item.query.filter_by(seller_id=current_user.id).all()
     return render_template('seller_dashboard.html', items=items)
 
@@ -265,7 +271,6 @@ def marketplace():
 # -------------------------------
 
 @app.route('/student/dashboard')
-@login_required
 def student_dashboard():
     from sakeja_models import House, Item
 
@@ -303,6 +308,10 @@ def book_house(house_id):
 # ADMIN FEATURES
 # -------------------------------
 
+# -------------------------------
+# ADMIN FEATURES
+# -------------------------------
+
 @app.route('/admin/dashboard')
 @login_required
 def admin_dashboard():
@@ -313,6 +322,7 @@ def admin_dashboard():
     pending_landlords = User.query.filter_by(role='landlord', is_approved=False).all()
     pending_sellers = User.query.filter_by(role='seller', is_approved=False).all()
     landlords = User.query.filter_by(role='landlord', is_approved=True).all()
+    sellers = User.query.filter_by(role='seller', is_approved=True).all()
     students = User.query.filter_by(role='student').all()
 
     return render_template(
@@ -320,8 +330,11 @@ def admin_dashboard():
         pending_landlords=pending_landlords,
         pending_sellers=pending_sellers,
         landlords=landlords,
+        sellers=sellers,   # ✅ Pass approved sellers too
         students=students
     )
+
+
 
 @app.route('/admin/approve/<int:user_id>')
 @login_required
@@ -336,10 +349,24 @@ def approve_user(user_id):
     flash(f'{user.role.capitalize()} approved.')
     return redirect(url_for('admin_dashboard'))
 
+
 @app.route('/admin/reject/<int:user_id>')
 @login_required
 def reject_user(user_id):
     if current_user.role != 'admin':
+        flash('Access denied.')
+        return redirect(url_for('dashboard'))
+
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    flash(f'{user.role.capitalize()} rejected.')
+    return redirect(url_for('admin_dashboard'))
+
+    # Override root to go to student dashboard when app starts
+    @app.route('/')
+    def home_override():
+        return redirect(url_for('student_dashboard'))
         flash('Access denied.')
         return redirect(url_for('dashboard'))
 
@@ -361,6 +388,32 @@ def dashboard():
     }
     route = role_routes.get(current_user.role)
     return redirect(url_for(route)) if route else redirect(url_for('home'))
+
+@app.route('/homepage')
+@login_required
+def homepage():
+    # Pass your stats here if needed
+    return render_template('homepage.html', listings=184, users=461)
+
+
+@app.route('/revoke_user/<int:user_id>')
+@login_required
+def revoke_user(user_id):
+    if current_user.role != 'admin':
+        flash('Access denied.')
+        return redirect(url_for('dashboard'))
+
+    user = User.query.get_or_404(user_id)
+    
+    if user.role in ['landlord', 'seller'] and user.is_approved:
+        user.is_approved = False   # ✅ Revoke approval
+        db.session.commit()
+        flash(f"{user.role.capitalize()} '{user.name}' has been revoked.")
+    else:
+        flash("Invalid revoke operation.")
+
+    return redirect(url_for('admin_dashboard'))
+
 
 # -------------------------------
 # Run Server

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="home-hero">
+  <div class="hero-left">
+    <h1>
+      <span class="bold">Ignite Your</span><br>
+      <span class="highlight">Campus Hustle</span>
+    </h1>
+    <p class="hero-desc">
+      Launch your business, showcase your talents, and connect with your campus community like never before.
+    </p>
+    <a href="{{ url_for('seller_marketplace') }}" class="hero-btn">Start Your Hustle</a>
+  </div>
+  <div class="hero-right">
+    <img src="{{ url_for('static', filename='images/jaba.png') }}" alt="Campus Group" class="hero-img">
+    <div class="hero-stat top-right">
+      <span class="stat-icon">&#128722;</span>
+      <span class="stat-number">+{{ listings }}</span>
+      <span class="stat-label">Listings</span>
+    </div>
+    <div class="hero-stat bottom-left">
+      <span class="stat-icon">&#128101;</span>
+      <span class="stat-number">+{{ users }}</span>
+      <span class="stat-label">Active Users</span>
+    </div>
+  </div>
+</div>
+{% endblock %}

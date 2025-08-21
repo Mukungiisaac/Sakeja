@@ -22,11 +22,11 @@
               <td>{{ landlord.name }}</td>
               <td>{{ landlord.email }}</td>
               <td>
-                <a href="{{ url_for('approve_user', user_id=landlord.id) }}"
+                <a href="{{ url_for('approve_user', user_id=landlord.id) }}" 
                    style="background-color: green; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px; margin-right: 5px;">
                   Approve
                 </a>
-                <a href="{{ url_for('reject_user', user_id=landlord.id) }}"
+                <a href="{{ url_for('reject_user', user_id=landlord.id) }}" 
                    style="background-color: red; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">
                   Reject
                 </a>
@@ -58,11 +58,11 @@
               <td>{{ seller.name }}</td>
               <td>{{ seller.email }}</td>
               <td>
-                <a href="{{ url_for('approve_user', user_id=seller.id) }}"
+                <a href="{{ url_for('approve_user', user_id=seller.id) }}" 
                    style="background-color: green; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px; margin-right: 5px;">
                   Approve
                 </a>
-                <a href="{{ url_for('reject_user', user_id=seller.id) }}"
+                <a href="{{ url_for('reject_user', user_id=seller.id) }}" 
                    style="background-color: red; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">
                   Reject
                 </a>
@@ -77,31 +77,71 @@
   </section>
 
   <!-- ✅ Approved Landlords -->
-  <section style="margin-top: 30px;">
-    <h2>Approved Landlords</h2>
-    {% if landlords %}
-      <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-        <thead style="background-color: #f5f5f5;">
+<section style="margin-top: 30px;">
+  <h2>Approved Landlords</h2>
+  {% if landlords %}
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+      <thead style="background-color: #f5f5f5;">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Approved?</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for landlord in landlords %}
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Approved?</th>
+            <td>{{ landlord.name }}</td>
+            <td>{{ landlord.email }}</td>
+            <td>{{ "Yes" if landlord.is_approved else "No" }}</td>
+            <td>
+              <a href="{{ url_for('revoke_user', user_id=landlord.id) }}" 
+                 onclick="return confirm('Are you sure you want to revoke this landlord?');"
+                 style="background-color: orange; padding: 5px; color: black; text-decoration: none;">Revoke</a>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {% for landlord in landlords %}
-            <tr>
-              <td>{{ landlord.name }}</td>
-              <td>{{ landlord.email }}</td>
-              <td>{{ "Yes" if landlord.is_approved else "No" }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No approved landlords found.</p>
-    {% endif %}
-  </section>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No approved landlords found.</p>
+  {% endif %}
+</section>
+
+<!-- ✅ Approved Sellers -->
+<section style="margin-top: 30px;">
+  <h2>Approved Sellers</h2>
+  {% if sellers %}
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+      <thead style="background-color: #f5f5f5;">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Approved?</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for seller in sellers %}
+          <tr>
+            <td>{{ seller.name }}</td>
+            <td>{{ seller.email }}</td>
+            <td>{{ "Yes" if seller.is_approved else "No" }}</td>
+            <td>
+              <a href="{{ url_for('revoke_user', user_id=seller.id) }}" 
+                 onclick="return confirm('Are you sure you want to revoke this seller?');"
+                 style="background-color: orange; text-decoration: none; color: black; padding: 5px;">Revoke</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No approved sellers found.</p>
+  {% endif %}
+</section>
+
 
   <!-- ✅ Students -->
   <section style="margin-top: 30px;">
