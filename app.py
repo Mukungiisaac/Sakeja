@@ -414,6 +414,29 @@ def revoke_user(user_id):
 
     return redirect(url_for('admin_dashboard'))
 
+@app.route('/delete_user/<int:user_id>', methods=['POST'])
+@login_required
+def delete_user(user_id):
+    if current_user.role != 'admin':
+        flash("Access denied.")
+        return redirect(url_for('dashboard'))
+
+    user = User.query.get_or_404(user_id)
+
+    # If user is seller, delete their items too
+    if user.role == 'seller':
+        Item.query.filter_by(seller_id=user.id).delete()
+
+    # If user is landlord, delete their houses too
+    if user.role == 'landlord':
+        House.query.filter_by(landlord_id=user.id).delete()
+
+    db.session.delete(user)
+    db.session.commit()
+
+    flash(f"User {user.name} and their data have been deleted.")
+    return redirect(url_for('admin_dashboard'))
+
 
 # -------------------------------
 # Run Server
