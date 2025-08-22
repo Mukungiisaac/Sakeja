@@ -2,7 +2,10 @@
 {% block content %}
 <!-- ...existing code... -->
 <nav class="navbar">
-  <div class="logo">ITECH STUDIO</div>
+  <div class="logo">
+  <img src="{{ url_for('static', filename='images/logo.png') }}" alt="iTech Logo">
+</div>
+
 
   <div class="nav-links">
     <a href="{{ url_for('home') }}">Home</a>

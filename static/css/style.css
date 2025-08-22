@@ -9,16 +9,39 @@ body {
 .navbar {
   background-color: #f6f5f7;
   color: #fff;
-  padding: 2rem;
   display: flex;
   justify-content: space-between;
+   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  align-items: center;
+  padding: 5px 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
-
-.navbar a {
+.nav-logout .btn {
+  background-color: #5D16EC;
   color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  
+}
+
+.nav-links a {
+  color: #5D16EC;
   margin-left: 1rem;
   text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  z-index: 100;
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
 }
 
 .logo {
@@ -26,9 +49,14 @@ body {
   font-size: 1.5rem;
   color: #FF914C;
 }
+.logo img {
+  height: 40px;     /* Adjust size */
+  width: auto;      /* Keeps aspect ratio */
+  object-fit: contain;
+}
 
 main {
-  padding: 2rem;
+  padding: 4rem;
 }
 
 form input, form select, form button {
@@ -124,7 +152,7 @@ img {
 }
 
 .alert {
-  background-color: #FF914C;
+  background-color: #ea2020;
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;
@@ -692,7 +720,7 @@ body.login-page {
 
 /* NAVIGATION BAR */
 
-.navbar {
+/* .navbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -707,28 +735,18 @@ body.login-page {
 }
 
 /* Add padding to body or main to prevent content hiding behind navbar */
-body {
+/* body {
   padding-top: 70px; /* Adjust based on navbar height */
-}
+/* } */
 /* ...existing code... */
 
-.logo {
+/* .logo {
   font-weight: bold;
   font-size: 1rem;
   color: #FF914C;
 }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
 
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-}
 
 .nav-logout form {
   margin: 0 80px;
@@ -742,7 +760,7 @@ body {
   padding: 8px 18px;
   font-size: 1rem;
   cursor: pointer;
-}
+}  */
 /* ...existing code... */
 input, select, textarea {
   border: 1px solid #ccc;
